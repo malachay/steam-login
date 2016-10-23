@@ -9,6 +9,10 @@ Put STEAM BigPicture mode at login screen
 
 NEWS
 ----
+* *Version 9* <br/>
+ - Added vdpau check for nvidia cards
+ - when steam is not running, restart steam
+
 * *Version 8* <br/>
 Improve primusrun. better performance with "optirun -b primus" than "primusrun" (thanks to xXxDeadStarxXx <axy.david@gmail.com>). PPA for Ubuntu Saucy.
 
