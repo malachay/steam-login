@@ -1,5 +1,9 @@
 steam-login
 ===========
+This is a fork from thor27's steam-de, big thanks for that!
+
+I just want to add Nvidia hardware decoding for "In-Home Streaming", by default, Steam uses software decoding for that, on weak CPUs the performance is very bad.
+ - check on start if vdpau is linked the nvidia library 
 
 Put STEAM BigPicture mode at login screen
 

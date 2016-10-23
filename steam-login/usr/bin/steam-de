@@ -28,6 +28,18 @@ function stop(){
 
 }
 
+
+function set_nvidia_vdpau() {
+steam_vdpau=~/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/vdpau
+steam_vdpau_old=~/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/vdpau.old
+nvidia_vdpau=/usr/lib32/vdpau
+	# Wenn die Nvidia Bibliothek fehlt
+	if [ ! -f $steam_vdpau/libvdpau_nvidia.so ]; then
+ 	        mv $steam_vdpau $steam_vdpau_old
+		ln -s $nvidia_vdpau $steam_vdpau	       
+	fi
+}
+
 function check_steam_window(){
     wmctrl -l | tr -s " " | cut -f4- -d" " | grep '^Steam$'
 }
@@ -54,6 +66,9 @@ which gnome-settings-daemon && gnome-settings-daemon &
 if [ -x /usr/bin/xinput ]; then
     disable_joysticks
 fi
+
+# Set nvidia vdpau (hardware decoding)
+set_nvidia_vdpau
 
 #Reset variables
 unset prefix
@@ -85,14 +100,18 @@ do
     sleep 0.5
     if ! ps -p $PID
     then
-        zenity --error --text "Ops! Steam had some trouble to run. That can be a problem with steam itself or with your configuration."
-        exit 1
+	#Execute STEAM
+	$prefix $program $parameters &
+	PID=$!
+	
+#        zenity --error --text "Ops! Steam had some trouble to run. That can be a problem with steam itself or with your configuration."
+#        exit 1
     fi
 done
 
 while check_steam_window
 do
-    sleep 10
+    sleep 5
 done
 
 #Exit steam nicely...
